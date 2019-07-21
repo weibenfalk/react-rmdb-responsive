@@ -13,7 +13,7 @@ export const useHomeFetch = () => {
     const params = new URLSearchParams(endpoint);
     const pageParam = params.get('page');
     const searchParam = params.get('query');
-
+    console.log(endpoint)
     try {
       const result = await (await fetch(endpoint)).json();
       setState(prev => ({

@@ -15,6 +15,8 @@ import Spinner from './elements/Spinner';
 
 import { useHomeFetch } from './hooks/useHomeFetch';
 
+import NoImage from './images/no_image.jpg';
+
 const Home = () => {
   console.log('rerender');
   const [{ state, loading }, fetchData] = useHomeFetch();
@@ -28,10 +30,10 @@ const Home = () => {
   };
 
   const loadMoreMovies = () => {
-    const endpoint = `${API_URL}${state.searchTerm && 'search/'}movie${
+    const endpoint = `${API_URL}${state.searchTerm ? 'search/' : ''}movie${
       state.searchTerm ? '' : '/popular'
-    }?api_key=${API_KEY}&query=${state.searchTerm}&page=${state.currentPage +
-      1}`;
+    }?api_key=${API_KEY}&query=${state.searchTerm ||
+      ''}&page=${state.currentPage + 1}`;
 
     fetchData(endpoint);
   };
@@ -55,7 +57,7 @@ const Home = () => {
               image={
                 element.poster_path
                   ? `${IMAGE_BASE_URL}${POSTER_SIZE}${element.poster_path}`
-                  : './images/no_image.jpg'
+                  : NoImage
               }
               movieId={element.id}
               movieName={element.original_title}
